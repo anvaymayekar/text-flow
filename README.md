@@ -70,12 +70,10 @@ P(s_j \mid s_i) =
 
 #### Where
 
-#### Where
-
--   \( \alpha \) — smoothing parameter (default: \( 10^{-8} \))
--   \( S \) — set of all unique states
--   \( |S| \) — total number of states
--   \( count(s_i \rightarrow s_j) \) — observed transitions from \( s_i \) to \( s_j \)
+-   $$\alpha$$ — smoothing parameter (default: $$10^{-8}$$)
+-   $$S$$ — set of all unique states
+-   $$|S|$$ — total number of states
+-   $$\text{count}(s_i \rightarrow s_j)$$ — observed transitions from $$s_i$$ to $$s_j$$
 
 ### Text Generation Algorithm
 
