@@ -60,7 +60,7 @@ The initial state distribution ( \pi ) is computed using additive (Laplace) smoo
 
 #### Transition Probabilities
 
-The transition probability from state ( s_i ) to state ( s_j ) is defined as:
+The transition probability from state $s_i$ to state $s_j$ is defined as:
 
 ```math
 P(s_j \mid s_i) =
@@ -78,12 +78,12 @@ P(s_j \mid s_i) =
 ### Text Generation Algorithm
 
 1. **Initialization**
-   Sample the initial state \( s_0 \) from the distribution \( \pi \).
+   Sample the initial state $s_0$ from the distribution $\pi$.
 
 2. **Propagation**
-   For each generation step \( t \):
+   For each generation step $t$:
 
-    - Retrieve transition probabilities \( P(\,\cdot \mid s_t\,) \)
+    - Retrieve transition probabilities $P(\cdot \mid s_t)$
     - Sample the next character using weighted random selection
 
 3. **State Update**
@@ -93,7 +93,7 @@ s_{t+1} = (c_t, c_{t+1})
 ```
 
 4. **Termination**
-   Stop after generating \( n \) characters.
+   Stop after generating $n$ characters.
 
 ### Anti-Repetition Mechanism
 
@@ -109,7 +109,7 @@ P'(s) = P(s) \quad \text{otherwise}
 
 where:
 
--   \( \gamma \in [0.01, 0.1] \) is the penalty factor
+-   $\gamma \in [0.01, 0.1]$ is the penalty factor
 -   `recent_context` denotes a sliding window of recently generated states
 
 This mechanism lowers the probability of repeating recent patterns while preserving overall stochasticity.
