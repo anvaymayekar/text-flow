@@ -54,8 +54,8 @@ The initial state distribution ( \pi ) is computed using additive (Laplace) smoo
 
 ```math
 \pi(s) =
-\frac{\operatorname{count}(s) + \alpha}
-{\sum_{s' \in S} \operatorname{count}(s') + |S| \alpha}
+\frac{count(s) + \alpha}
+{\sum_{s' \in S} count(s') + |S| \alpha}
 ```
 
 #### Transition Probabilities
@@ -64,8 +64,8 @@ The transition probability from state ( s_i ) to state ( s_j ) is defined as:
 
 ```math
 P(s_j \mid s_i) =
-\frac{\operatorname{count}(s_i \rightarrow s_j) + \alpha}
-{\sum_{k} \operatorname{count}(s_i \rightarrow s_k) + |S| \alpha}
+\frac{count(s_i \rightarrow s_j) + \alpha}
+{\sum_k count(s_i \rightarrow s_k) + |S| \alpha}
 ```
 
 #### Where
@@ -73,7 +73,7 @@ P(s_j \mid s_i) =
 -   ( \alpha ) — smoothing parameter (default: ( 10^{-8} ))
 -   ( S ) — set of all unique states
 -   ( |S| ) — total number of states
--   ( \operatorname{count}(s_i \rightarrow s_j) ) — observed transitions from ( s_i ) to ( s_j )
+-   ( count(s_i \rightarrow s_j) ) — observed transitions from ( s_i ) to ( s_j )
 
 ### Text Generation Algorithm
 
@@ -100,11 +100,11 @@ s_{t+1} = (c_t, c_{t+1})
 To reduce repetitive loops, a context-aware penalty is applied to recently generated states:
 
 ```math
-P'(s) =
-\begin{cases}
-P(s) \cdot \gamma, & s \in \text{recent\_context} \\
-P(s), & \text{otherwise}
-\end{cases}
+P'(s) = P(s) \cdot \gamma \quad \text{if } s \in recent\_context
+```
+
+```math
+P'(s) = P(s) \quad \text{otherwise}
 ```
 
 where:
@@ -544,6 +544,4 @@ You are free to use, modify, and distribute this software with proper attributio
 > **Anvay Mayekar**  
 > 🎓 B.Tech in Electronics & Computer Science — SAKEC, Mumbai
 >
-> [![GitHub](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](https://www.github.com/anvaymayekar)
-> [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://in.linkedin.com/in/anvaymayekar)
-> [![Gmail](https://img.shields.io/badge/Gmail-D14836.svg?style=for-the-badge&logo=gmail&logoColor=white)](mailto:anvaay@gmail.com)
+> [![GitHub](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](https://www.github.com/anvaymayekar) > [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://in.linkedin.com/in/anvaymayekar) > [![Gmail](https://img.shields.io/badge/Gmail-D14836.svg?style=for-the-badge&logo=gmail&logoColor=white)](mailto:anvaay@gmail.com)
