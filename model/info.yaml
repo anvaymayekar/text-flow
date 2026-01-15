@@ -1,0 +1,38 @@
+# =============================
+# Essential info regarding the model
+# =============================
+
+# Model / algorithm settings
+model:
+    type: "MarkovChain"
+    level: "character" # "word" or "character" level
+    order: 2 # Number of previous characters to consider
+    preprocess:
+        alphabetic_only: true # Keep only alphabetic characters
+        lowercase: true # Convert all characters to lowercase
+        remove_punctuation: true # Remove punctuation
+        space_normalization: true # Normalize spaces
+
+# Paths
+paths:
+    info: "model/info.yaml" # relative to project root
+    corpus: "model/corpus.txt"
+    params: "model/params.yaml"
+    initial: "model/data/initial.pkl"
+    transitions: "model/data/transitions.pkl"
+    logs: "model/logs/sessions.log"
+
+# Logging settings
+logging:
+    level: INFO
+    file: model/logs/sessions.log # relative to project root
+    format: "%(asctime)s [%(levelname)s] %(message)s"
+
+# Optional settings
+settings:
+    verbose: true
+    debug_mode: false
+
+# Languages (array)
+languages:
+    - English
