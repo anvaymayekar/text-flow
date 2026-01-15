@@ -50,7 +50,7 @@ P(c_{i+1} \mid c_{i-1}, c_i)
 
 #### Initial State Distribution
 
-The initial state distribution ( \pi ) is computed using additive (Laplace) smoothing:
+The initial state distribution $\pi$ is computed using additive (Laplace) smoothing:
 
 ```math
 \pi(s) =
