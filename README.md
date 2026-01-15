@@ -24,56 +24,95 @@ A probabilistic text generation engine built from scratch using **2nd-order Mark
 
 ### Markov Chain Theory
 
-A **2nd-order Markov Chain** assumes that the probability of the next state depends only on the current state and the previous state:
+A **second-order Markov chain** assumes that the probability of the next state depends only on the two most recent states:
 
+```math
+P(X_n \mid X_1, X_2, \ldots, X_{n-1})
+=
+P(X_n \mid X_{n-2}, X_{n-1})
 ```
-P(Xₙ | X₁, X₂, ..., Xₙ₋₁) = P(Xₙ | Xₙ₋₂, Xₙ₋₁)
+
+### State Representation
+
+Each state is defined as an ordered pair of consecutive characters:
+
+```math
+s_i = (c_{i-1}, c_i)
 ```
 
-**State Representation:**
+Transitions are defined as probabilities of the next character given the current state:
 
--   State = tuple of 2 consecutive characters: `(cᵢ₋₁, cᵢ)`
--   Transitions = probabilities to next character: `P(cᵢ₊₁ | cᵢ₋₁, cᵢ)`
+```math
+P(c_{i+1} \mid c_{i-1}, c_i)
+```
 
 ### Probability Calculations
 
-**Initial State Distribution (π):**
+#### Initial State Distribution
 
-```
-π(s) = (count(s) + α) / (Σ count(all states) + |S| × α)
-```
+The initial state distribution ( \pi ) is computed using additive (Laplace) smoothing:
 
-**Transition Probabilities:**
-
-```
-P(sⱼ | sᵢ) = (count(sᵢ → sⱼ) + α) / (Σ count(sᵢ → *) + |S| × α)
+```math
+\pi(s) =
+\frac{\operatorname{count}(s) + \alpha}
+{\sum_{s' \in S} \operatorname{count}(s') + |S| \alpha}
 ```
 
-Where:
+#### Transition Probabilities
 
--   `α` = smoothing parameter (default: 1e-8)
--   `|S|` = total number of unique states
--   `count(sᵢ → sⱼ)` = observed transitions from state `sᵢ` to `sⱼ`
+The transition probability from state ( s_i ) to state ( s_j ) is defined as:
+
+```math
+P(s_j \mid s_i) =
+\frac{\operatorname{count}(s_i \rightarrow s_j) + \alpha}
+{\sum_{k} \operatorname{count}(s_i \rightarrow s_k) + |S| \alpha}
+```
+
+#### Where
+
+-   ( \alpha ) — smoothing parameter (default: ( 10^{-8} ))
+-   ( S ) — set of all unique states
+-   ( |S| ) — total number of states
+-   ( \operatorname{count}(s_i \rightarrow s_j) ) — observed transitions from ( s_i ) to ( s_j )
 
 ### Text Generation Algorithm
 
-1. **Initialize**: Sample initial state from π distribution
-2. **Propagate**: For each step:
-    - Look up transition probabilities from current state
-    - Sample next state using weighted random selection
-    - Append generated character to output
-    - Update current state = (previous_char, new_char)
-3. **Terminate**: After generating `n` characters
+1. **Initialization**
+   Sample the initial state ( s_0 ) from the distribution ( \pi ).
+
+2. **Propagation**
+   For each generation step ( t ):
+
+    - Retrieve transition probabilities ( P(\cdot \mid s_t) )
+    - Sample the next character using weighted random selection
+
+3. **State Update**
+
+```math
+s_{t+1} = (c_t, c_{t+1})
+```
+
+4. **Termination**
+   Stop after generating ( n ) characters.
 
 ### Anti-Repetition Mechanism
 
-To prevent repetitive loops, the model implements **context-aware penalty**:
+To reduce repetitive loops, a context-aware penalty is applied to recently generated states:
 
-```
-P'(state) = P(state) × penalty_factor  if state in recent_context
+```math
+P'(s) =
+\begin{cases}
+P(s) \cdot \gamma, & s \in \text{recent\_context} \\
+P(s), & \text{otherwise}
+\end{cases}
 ```
 
-Where `penalty_factor ∈ [0.01, 0.1]` reduces probability of recently generated states.
+where:
+
+-   ( \gamma \in [0.01, 0.1] ) is the penalty factor
+-   `recent_context` denotes a sliding window of recently generated states
+
+This mechanism lowers the probability of repeating recent patterns while preserving overall stochasticity.
 
 ---
 
